@@ -111,15 +111,16 @@
   </div>
   <div class="progress-wrap">
     <div class="progress-steps">
-      <div class="ps"><div class="ps-dot done" id="dot1">&#10003;</div></div>
-      <div class="ps-line done" id="line1"></div>
-      <div class="ps"><div class="ps-dot active" id="dot2">2</div></div>
+      <div class="ps"><div class="ps-dot active" id="dot1">1</div></div>
+      <div class="ps-line" id="line1"></div>
+      <div class="ps"><div class="ps-dot" id="dot2">2</div></div>
       <div class="ps-line" id="line2"></div>
       <div class="ps"><div class="ps-dot" id="dot3">3</div></div>
       <div class="ps-line" id="line3"></div>
       <div class="ps"><div class="ps-dot" id="dot4">4</div></div>
     </div>
     <div class="progress-label" id="progressLabel">Your identity</div>
+
   </div>
 
   <div class="panel active" id="panel1">
@@ -268,7 +269,7 @@
 (function() {
   var formData = {};
   var currentPanel = 1;
-  var labels = ['Payment', 'Your identity', 'Birth details', 'Focus and notes'];
+  var labels = ['Your identity', 'Birth details', 'Focus and notes', 'Review'];
   var focusLabels = {purpose:'Career and Purpose',love:'Relationships and Love',growth:'Personal Growth',spirituality:'Spirituality',creativity:'Creativity',general:'General Overview'};
   var confidenceLabels = {exact:'Exact',approximate:'Approximate',unknown:'Unknown - using noon'};
 
@@ -379,13 +380,6 @@
       personal_note: formData.personalNote || 'none',
       _subject: 'Soul Blueprint Order - ' + formData.firstName + ' ' + formData.lastName
     };
-
-    // Send to Make webhook (automation)
-    fetch('https://hook.eu1.make.com/n683ij4bz7vqomuekpp69y381bvqwcsu', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(function() { console.log('Make webhook error'); });
 
     // Send to Formspree (email)
     fetch('https://formspree.io/f/maqpgavq', {
