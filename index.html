@@ -111,16 +111,15 @@
   </div>
   <div class="progress-wrap">
     <div class="progress-steps">
-      <div class="ps"><div class="ps-dot active" id="dot1">1</div></div>
-      <div class="ps-line" id="line1"></div>
-      <div class="ps"><div class="ps-dot" id="dot2">2</div></div>
+      <div class="ps"><div class="ps-dot done" id="dot1">&#10003;</div></div>
+      <div class="ps-line done" id="line1"></div>
+      <div class="ps"><div class="ps-dot active" id="dot2">2</div></div>
       <div class="ps-line" id="line2"></div>
       <div class="ps"><div class="ps-dot" id="dot3">3</div></div>
       <div class="ps-line" id="line3"></div>
       <div class="ps"><div class="ps-dot" id="dot4">4</div></div>
     </div>
     <div class="progress-label" id="progressLabel">Your identity</div>
-
   </div>
 
   <div class="panel active" id="panel1">
@@ -255,7 +254,7 @@
       <div class="confirm-title">Your Blueprint<br><em>is on its way.</em></div>
       <p class="confirm-sub">We have received your birth data. Your personalized 60-page Soul Blueprint will arrive in your inbox within <strong style="color:var(--gold)">7 business days</strong>.</p>
       <div class="confirm-details" id="confirmDetails"></div>
-      <p class="confirm-note">Questions? Contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="eb98849e879889879e8e9b9982859fab8c868a8287c5888486">[email&#160;protected]</a></strong></p>
+      <p class="confirm-note">Questions? Contact us at <strong>soulsblueprint at gmail.com</strong></p>
       <div class="trust-row">
         <div class="trust-item">14-day guarantee</div>
         <div class="trust-item">Delivered by email</div>
@@ -264,10 +263,12 @@
     </div>
   </div>
 </div>
+
+<script>
 (function() {
   var formData = {};
   var currentPanel = 1;
-  var labels = ['Your identity', 'Birth details', 'Focus and notes', 'Review'];
+  var labels = ['Payment', 'Your identity', 'Birth details', 'Focus and notes'];
   var focusLabels = {purpose:'Career and Purpose',love:'Relationships and Love',growth:'Personal Growth',spirituality:'Spirituality',creativity:'Creativity',general:'General Overview'};
   var confidenceLabels = {exact:'Exact',approximate:'Approximate',unknown:'Unknown - using noon'};
 
@@ -379,14 +380,19 @@
       _subject: 'Soul Blueprint Order - ' + formData.firstName + ' ' + formData.lastName
     };
 
-    // Send to Formspree (email)
-    fetch('https://formspree.io/f/maqpgavq', {
+    fetch('https://formspree.io/f/xbdzvraw', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(payload)
     })
-    .then(function() { showConfirmation(); })
-    .catch(function() { showConfirmation(); });
+    .then(function(res) {
+      if (res.ok) { showConfirmation(); }
+      else { btn.disabled = false; btn.textContent = 'Submit My Birth Data'; alert('Something went wrong. Please try again.'); }
+    })
+    .catch(function() {
+      btn.disabled = false; btn.textContent = 'Submit My Birth Data';
+      alert('Connection error. Please try again.');
+    });
   }
 
   function showConfirmation() {
@@ -441,4 +447,11 @@
       var s = document.createElement('div');
       s.className = 'star';
       var sz = Math.random() * 1.8 + 0.4;
-      s.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;left:' + (Math.random()*
+      s.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;left:' + (Math.random()*100) + '%;top:' + (Math.random()*100) + '%;--dur:' + (2+Math.random()*5) + 's;--max-op:' + (0.15+Math.random()*0.5) + ';animation-delay:' + (Math.random()*6) + 's;';
+      sf.appendChild(s);
+    }
+  });
+})();
+</script>
+</body>
+</html>
